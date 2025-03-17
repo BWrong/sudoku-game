@@ -1,0 +1,49 @@
+name: Upload to COS
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 设置 Python 版本
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build
+        run: |
+          npm install
+          npm run build
+
+      # 安装 COS 工具
+      - name: Install COS tools
+        run: |
+          pip install cos-python-sdk-v5
+          pip install coscmd
+
+      # 上传文件到 COS
+      - name: Upload Files to COS
+        env:
+          TENCENTCLOUD_SECRET_ID: ${{ secrets.SecretId }}
+          TENCENTCLOUD_SECRET_KEY: ${{ secrets.SecretKey }}
+          COS_REGION: ${{ secrets.CosRegion }}  # 替换为实际地域
+          COS_BUCKET: ${{ secrets.CosBucket }}  # 替换为存储桶名称
+        run: |
+          coscmd config -a $TENCENTCLOUD_SECRET_ID -s $TENCENTCLOUD_SECRET_KEY -b $COS_BUCKET -r $COS_REGION
+          coscmd upload -rs --delete -f ./dist/ / --ignore "./.git/*"

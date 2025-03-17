@@ -5,7 +5,7 @@
       <h1>数独游戏</h1>
       <p class="subtitle">挑战你的逻辑思维能力</p>
     </div>
-    <SudokuGame />
+    <router-view />
     <footer class="app-footer">
       <p>© 2023 数独游戏 - 享受解谜的乐趣</p>
     </footer>
@@ -13,17 +13,12 @@
 </template>
 
 <script>
-import SudokuGame from './components/SudokuGame.vue';
-
 /**
  * 应用主组件
  * @component App
  */
 export default {
-  name: 'App',
-  components: {
-    SudokuGame
-  }
+  name: 'App'
 }
 </script>
 
@@ -140,6 +135,36 @@ h1:after {
   animation: fadeIn 0.6s ease-out 0.4s forwards;
 }
 
+.app-nav {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #4285f4;
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+}
+
+.nav-link:hover {
+  background-color: #3367d6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(66, 133, 244, 0.4);
+}
+
+.router-link-active {
+  background-color: #3367d6;
+  box-shadow: 0 2px 5px rgba(51, 103, 214, 0.5);
+}
+
 .app-footer {
   margin-top: auto;
   text-align: center;
@@ -168,6 +193,11 @@ h1:after {
 
   h1 {
     font-size: 2rem;
+  }
+
+  .app-nav {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 </style>
