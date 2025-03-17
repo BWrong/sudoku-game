@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [22.x]
 
     steps:
       # 检出代码
@@ -26,16 +26,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Build
-        run: |
-          npm install
-          npm run build
-
       # 安装 COS 工具
       - name: Install COS tools
         run: |
           pip install cos-python-sdk-v5
           pip install coscmd
+
+      - name: Build
+        run: |
+          npm install
+          npm run build
 
       # 上传文件到 COS
       - name: Upload Files to COS
