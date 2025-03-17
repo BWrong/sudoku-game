@@ -144,7 +144,7 @@ export function useSolver(boardState) {
           board[row][col].isSolution = true;
 
           // 记录解题步骤
-          solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（唯一候选数法）`);
+          solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（唯一候选数法）：该位置只有唯一的候选数字${num}可以填入，其他数字都不符合规则。`);
 
           // 从相关单元格的候选数中删除该数字
           eliminateCandidates(candidates, num, row, col);
@@ -188,7 +188,7 @@ export function useSolver(boardState) {
           board[row][col].isSolution = true;
 
           // 记录解题步骤
-          solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（隐性唯一候选数法）`);
+          solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（隐性唯一候选数法）：在第${row + 1}行中，数字${num}只能放在这个位置，因为其他位置都不能填入${num}。`);
 
           // 从相关单元格的候选数中删除该数字
           eliminateCandidates(candidates, num, row, col);
@@ -220,7 +220,7 @@ export function useSolver(boardState) {
           board[row][col].isSolution = true;
 
           // 记录解题步骤
-          solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（隐性唯一候选数法）`);
+          solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（隐性唯一候选数法）：在第${col + 1}列中，数字${num}只能放在这个位置，因为其他位置都不能填入${num}。`);
 
           // 从相关单元格的候选数中删除该数字
           eliminateCandidates(candidates, num, row, col);
@@ -258,7 +258,7 @@ export function useSolver(boardState) {
             board[row][col].isSolution = true;
 
             // 记录解题步骤
-            solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（隐性唯一候选数法）`);
+            solutionSteps.value.push(`在第${row + 1}行第${col + 1}列填入数字${num}（隐性唯一候选数法）：在第${Math.floor(row / 3) + 1}宫格中，数字${num}只能放在这个位置，因为其他位置都不能填入${num}。`);
 
             // 从相关单元格的候选数中删除该数字
             eliminateCandidates(candidates, num, row, col);
@@ -565,7 +565,7 @@ export function useSolver(boardState) {
         }
         boardState.showSolution.value = true;
         boardState.isSolved.value = true;
-        solutionSteps.value.push("使用回溯法完成剩余部分");
+        solutionSteps.value.push("使用回溯法完成剩余部分：通过尝试各种可能的数字组合，找到满足数独规则的唯一解。");
 
         // 初始化步骤显示
         if (solutionSteps.value.length > 0) {

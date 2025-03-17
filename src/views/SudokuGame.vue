@@ -1,5 +1,33 @@
 <template>
   <div class="sudoku-container">
+    <!-- 顶部导航栏 -->
+    <div class="mobile-tabbar">
+      <div
+        class="tab-item"
+        :class="{'active': activeTab === 'game'}"
+        @click="activeTab = 'game'"
+      >
+        <div class="tab-icon">🎮</div>
+        <div class="tab-label">游戏</div>
+      </div>
+      <div
+        class="tab-item"
+        :class="{'active': activeTab === 'library'}"
+        @click="activeTab = 'library'"
+      >
+        <div class="tab-icon">📚</div>
+        <div class="tab-label">题库</div>
+      </div>
+      <div
+        class="tab-item"
+        :class="{'active': activeTab === 'techniques'}"
+        @click="activeTab = 'techniques'"
+      >
+        <div class="tab-icon">💡</div>
+        <div class="tab-label">技巧</div>
+      </div>
+    </div>
+
     <div class="main-content">
       <!-- 游戏区域 -->
       <div class="game-section" v-if="activeTab === 'game'">
@@ -22,17 +50,17 @@
         </div>
 
         <div class="sudoku-board" :class="{'solved': showSolution && isSolved}">
-      <div v-for="(row, rowIndex) in board" :key="'row-' + rowIndex" class="sudoku-row">
-        <div
-          v-for="(cell, colIndex) in row"
-          :key="'cell-' + rowIndex + '-' + colIndex"
-          class="sudoku-cell"
-          :class="{
-            'top-border': rowIndex % 3 === 0,
-            'bottom-border': rowIndex % 3 === 2,
-            'left-border': colIndex % 3 === 0,
-            'right-border': colIndex % 3 === 2,
-            'user-input': cell.isUserInput,
+          <div v-for="(row, rowIndex) in board" :key="'row-' + rowIndex" class="sudoku-row">
+            <div
+              v-for="(cell, colIndex) in row"
+              :key="'cell-' + rowIndex + '-' + colIndex"
+              class="sudoku-cell"
+              :class="{
+                'top-border': rowIndex % 3 === 0,
+                'bottom-border': rowIndex % 3 === 2,
+                'left-border': colIndex % 3 === 0,
+                'right-border': colIndex % 3 === 2,
+                'user-input': cell.isUserInput,
                 'user-answer': cell.isUserAnswer,
                 'solution': cell.isSolution,
                 'highlight-row': highlightedCell && highlightedCell.row === rowIndex,
@@ -43,29 +71,29 @@
               }"
               @mouseenter="highlightCell(rowIndex, colIndex)"
               @mouseleave="clearHighlight"
-        >
-          <input
+            >
+              <input
                 v-if="!showSolution && ((gameMode === 'create' && !cell.isUserAnswer) || (gameMode === 'solve' && !cell.isUserInput))"
-            type="text"
-            v-model="cell.value"
-            @input="validateInput($event, rowIndex, colIndex)"
+                type="text"
+                v-model="cell.value"
+                @input="validateInput($event, rowIndex, colIndex)"
                 @focus="highlightCell(rowIndex, colIndex)"
-            maxlength="1"
+                maxlength="1"
                 :disabled="showSolution || (gameMode === 'solve' && cell.isUserInput) || (gameMode === 'create' && cell.isUserAnswer)"
-          >
-          <span v-else>{{ cell.value || '' }}</span>
+              >
+              <span v-else>{{ cell.value || '' }}</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
         <div class="celebration" v-if="showSolution && isSolved">
           <div class="confetti-container">
             <div v-for="n in 30" :key="n" class="confetti" :style="getConfettiStyle(n)"></div>
           </div>
           <div class="success-message">恭喜！数独已解决</div>
-    </div>
+        </div>
 
-    <div class="controls">
+        <div class="controls">
           <button v-if="gameMode === 'create'" @click="clearBoard" class="btn">
             清空全部
           </button>
@@ -85,7 +113,7 @@
           <button v-if="gameMode === 'solve'" @click="solveSudoku" class="btn primary">
             求解
           </button>
-    </div>
+        </div>
 
         <!-- 解题步骤区域（与游戏区域同时显示） -->
         <div class="steps-section-inline" v-if="showSolution && solutionSteps.length > 0">
@@ -98,8 +126,8 @@
             <span class="step-progress">{{ currentStepIndex + 1 }} / {{ solutionSteps.length }}</span>
             <button @click="nextStep" :disabled="currentStepIndex >= solutionSteps.length - 1" class="step-btn">
               下一步
-          </button>
-        </div>
+            </button>
+          </div>
 
           <div class="current-step">
             <span class="step-number">{{ currentStepIndex + 1 }}.</span>
@@ -115,21 +143,20 @@
               @click="goToStep(index)"
             >
               <span class="step-number">{{ index + 1 }}.</span> {{ step }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
       <!-- 题库区域 -->
       <div class="library-section" v-if="activeTab === 'library'">
-        <h3>题库：</h3>
         <div class="library-list" v-if="puzzleLibrary.length > 0">
           <button @click="clearLibrary" class="btn-clear-library">
             清空题库
           </button>
           <div
             v-for="(puzzle, index) in puzzleLibrary"
-          :key="index"
+            :key="index"
             class="library-item"
           >
             <div class="library-preview" @click="loadPuzzleFromLibrary(index); activeTab = 'game';">
@@ -141,9 +168,9 @@
                   :class="{'preview-cell-filled': puzzle.board[rowIndex][colIndex].value}"
                 >
                   {{ puzzle.board[rowIndex][colIndex].value }}
+                </div>
               </div>
-        </div>
-      </div>
+            </div>
             <div class="library-info">
               <div class="library-name">{{ puzzle.name || '未命名题目' }}</div>
               <div class="library-difficulty">难度: {{ getDifficultyText(puzzle.difficulty) }}</div>
@@ -151,8 +178,8 @@
               <div class="library-actions">
                 <button @click="renamePuzzle(index)" class="btn-action btn-rename">重命名</button>
                 <button @click="deletePuzzleFromLibrary(index)" class="btn-action btn-delete">删除</button>
-    </div>
-  </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="library-empty" v-else>
@@ -162,7 +189,6 @@
 
       <!-- 技巧区域 -->
       <div class="techniques-section" v-if="activeTab === 'techniques'">
-        <h3>解题技巧：</h3>
         <div class="technique-tabs">
           <button
             v-for="(technique, index) in techniques"
@@ -173,7 +199,7 @@
           >
             {{ technique.name }}
           </button>
-            </div>
+        </div>
         <div class="technique-content">
           <h4>{{ techniques[currentTechniqueIndex].name }}</h4>
           <div class="technique-difficulty">
@@ -184,39 +210,11 @@
             >
               {{ getDifficultyText(techniques[currentTechniqueIndex].difficulty) }}
             </span>
-            </div>
+          </div>
           <div class="technique-description" v-html="techniques[currentTechniqueIndex].description"></div>
           <div class="technique-example" v-html="techniques[currentTechniqueIndex].example"></div>
-            </div>
-            </div>
-            </div>
-
-    <!-- 底部导航栏 -->
-    <div class="mobile-tabbar">
-      <div
-        class="tab-item"
-        :class="{'active': activeTab === 'game'}"
-        @click="activeTab = 'game'"
-      >
-        <div class="tab-icon">🎮</div>
-        <div class="tab-label">游戏</div>
-            </div>
-      <div
-        class="tab-item"
-        :class="{'active': activeTab === 'library'}"
-        @click="activeTab = 'library'"
-      >
-        <div class="tab-icon">📚</div>
-        <div class="tab-label">题库</div>
-            </div>
-      <div
-        class="tab-item"
-        :class="{'active': activeTab === 'techniques'}"
-        @click="activeTab = 'techniques'"
-      >
-        <div class="tab-icon">💡</div>
-        <div class="tab-label">技巧</div>
-            </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -456,9 +454,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 80px; /* 增加底部边距，为底部导航栏留出更多空间 */
   width: 100%;
-  padding: 0 10px;
   min-height: 100vh;
 }
 
@@ -468,7 +464,23 @@ onMounted(() => {
   justify-content: center;
   width: 100%;
   gap: 20px;
-  padding-bottom: 80px; /* 增加底部内边距 */
+}
+
+@media (max-width: 767px) {
+  .main-content {
+    padding-bottom: 80px; /* 移动端增加底部内边距 */
+  }
+
+  .mobile-tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .sudoku-container {
+    margin-bottom: 80px; /* 为底部导航栏留出空间 */
+  }
 }
 
 .game-section,
@@ -487,7 +499,9 @@ onMounted(() => {
   position: relative;
   overflow: hidden;
 }
-
+.game-section{
+  padding: 15px 20px;
+}
 .game-section::before,
 .library-section::before,
 .techniques-section::before {
@@ -501,8 +515,8 @@ onMounted(() => {
 }
 
 .sudoku-board {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(9, 1fr);
   border: 2px solid #333;
   margin: 10px 0 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
@@ -513,16 +527,17 @@ onMounted(() => {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  aspect-ratio: 1 / 1; /* 确保整个棋盘是正方形 */
 }
 
 .sudoku-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
   width: 100%;
 }
 
 .sudoku-cell {
-  flex: 1;
-  height: 38px;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -532,12 +547,22 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
-.sudoku-cell input {
+.sudoku-cell input,
+.sudoku-cell span {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.sudoku-cell input {
   border: none;
   text-align: center;
-  font-size: 20px; /* 增大字体 */
   background: transparent;
   outline: none;
   color: #2c3e50;
@@ -546,7 +571,6 @@ onMounted(() => {
 }
 
 .sudoku-cell span {
-  font-size: 20px; /* 增大字体 */
   font-family: 'Arial', sans-serif;
 }
 
@@ -825,6 +849,7 @@ onMounted(() => {
   transition: box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  padding-bottom: 20px; /* 增加底部内边距 */
 }
 
 .library-section::before {
@@ -848,20 +873,24 @@ onMounted(() => {
 .library-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px; /* 恢复原来的间距 */
   width: 100%;
   max-height: 70vh;
   overflow-y: auto;
   padding: 10px;
+  padding-bottom: 30px; /* 恢复原来的底部内边距 */
 }
 
 .library-item {
   display: flex;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* 恢复原来的圆角 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 恢复原来的阴影 */
   overflow: hidden;
   transition: all 0.3s ease;
+  flex-wrap: wrap; /* 允许在小屏幕上换行 */
+  align-items: center; /* 垂直居中 */
+  gap: 10px; /* 恢复原来的元素间距 */
 }
 
 .library-item:hover {
@@ -873,13 +902,32 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   border: 1px solid #ddd;
-  margin-right: 15px;
-  border-radius: 6px;
+  margin: 10px 15px 10px 10px; /* 恢复原来的外边距 */
+  border-radius: 6px; /* 恢复原来的圆角 */
   overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* 恢复原来的阴影 */
   background-color: #f9f9f9;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px; /* 恢复原来的内边距 */
+  min-width: 120px; /* 恢复原来的最小宽度 */
+  align-self: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+}
+
+.preview-row {
+  display: flex;
+  justify-content: center;
+}
+
+.preview-cell {
+  width: 12px; /* 恢复原来的单元格尺寸 */
+  height: 12px; /* 恢复原来的单元格尺寸 */
+  border: 1px solid #ddd; /* 恢复原来的边框 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px; /* 恢复原来的字体大小 */
+  color: #333;
 }
 
 .library-info {
@@ -888,6 +936,7 @@ onMounted(() => {
   flex-direction: column;
   padding: 10px;
   justify-content: space-between;
+  min-width: 200px; /* 设置最小宽度 */
 }
 
 .library-name {
@@ -911,16 +960,19 @@ onMounted(() => {
 
 .library-actions {
   display: flex;
-  gap: 10px;
+  gap: 10px; /* 恢复原来的按钮间距 */
+  margin-top: 10px; /* 恢复原来的顶部外边距 */
+  margin-bottom: 5px; /* 恢复原来的底部外边距 */
 }
 
 .btn-action {
-  padding: 5px 10px;
+  padding: 8px 12px; /* 恢复原来的按钮内边距 */
   border: none;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 12px; /* 恢复原来的字体大小 */
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap; /* 防止文字换行 */
 }
 
 .btn-rename {
@@ -970,16 +1022,13 @@ onMounted(() => {
 .mobile-tabbar {
   display: flex;
   justify-content: space-around;
-    align-items: center;
+  align-items: center;
   background-color: #fff;
-  padding: 12px 0;
+  padding: 8px 0;
   border-top: 1px solid #ddd;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  z-index: 1000;
 }
 
 .tab-item {
@@ -988,7 +1037,7 @@ onMounted(() => {
   align-items: center;
   color: #666;
   transition: all 0.3s ease;
-  padding: 8px 0;
+  padding: 5px 0;
   width: 33.33%; /* 三个选项平均分配 */
 }
 
@@ -998,8 +1047,8 @@ onMounted(() => {
 }
 
 .tab-icon {
-  font-size: 24px;
-  margin-bottom: 4px;
+  font-size: 20px;
+  margin-bottom: 2px;
 }
 
 .tab-label {
@@ -1008,10 +1057,6 @@ onMounted(() => {
 }
 
 @media (min-width: 768px) {
-  .sudoku-cell {
-    height: 45px;
-  }
-
   .sudoku-cell input,
   .sudoku-cell span {
     font-size: 20px;
@@ -1040,21 +1085,83 @@ onMounted(() => {
     min-width: 300px;
     display: block !important;
   }
+
+  /* 平板和桌面端显示顶部导航栏 */
+  .mobile-tabbar {
+    display: flex;
+    position: static;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-top: none;
+    border-bottom: none;
+    margin-bottom: 20px;
+    padding: 3px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tab-item {
+    padding: 8px 15px;
+    margin: 3px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tab-item:hover:not(.active) {
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
+  }
+
+  .tab-item.active {
+    background-color: #4285f4;
+    color: white;
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.25);
+  }
+
+  .tab-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    z-index: 1;
+  }
+
+  .tab-icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tab-label {
+    font-size: 13px;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+  }
 }
 
 /* 预览单元格样式 */
 .preview-row {
   display: flex;
+  justify-content: center; /* 水平居中 */
 }
 
 .preview-cell {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #eee;
-  font-size: 8px;
+  font-size: 7px;
   color: #aaa;
   background-color: #f9f9f9;
 }
@@ -1291,28 +1398,27 @@ onMounted(() => {
 
 /* 响应式布局优化 */
 @media (min-width: 361px) and (max-width: 374px) {
-  .sudoku-cell {
-    height: 38px;
+  .sudoku-cell input,
+  .sudoku-cell span {
+    font-size: 16px;
   }
 }
 
 @media (min-width: 375px) and (max-width: 413px) {
-  .sudoku-cell {
-    height: 40px;
+  .sudoku-cell input,
+  .sudoku-cell span {
+    font-size: 16px;
   }
 }
 
 @media (min-width: 414px) and (max-width: 767px) {
-  .sudoku-cell {
-    height: 44px;
+  .sudoku-cell input,
+  .sudoku-cell span {
+    font-size: 18px;
   }
 }
 
 @media (max-width: 480px) {
-  .sudoku-cell {
-    height: 32px;
-  }
-
   .sudoku-cell input,
   .sudoku-cell span {
     font-size: 14px;
@@ -1326,23 +1432,30 @@ onMounted(() => {
   .game-section {
     padding: 15px 10px;
   }
+
+  .library-item {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .library-preview {
+    margin: 10px auto;
+  }
+
+  .library-info {
+    min-width: 100%;
+    text-align: center;
+  }
+
+  .library-actions {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 360px) {
-  .sudoku-cell {
-    height: 36px;
-  }
-
   .sudoku-cell input,
   .sudoku-cell span {
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 768px) {
-  /* 平板和桌面端隐藏底部导航栏，使用侧边标签页 */
-  .mobile-tabbar {
-    display: none;
+    font-size: 14px;
   }
 }
 
