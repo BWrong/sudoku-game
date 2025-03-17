@@ -172,11 +172,9 @@
               </div>
             </div>
             <div class="library-info">
-              <div class="library-name">{{ puzzle.name || '未命名题目' }}</div>
               <div class="library-difficulty">难度: {{ getDifficultyText(puzzle.difficulty) }}</div>
               <div class="library-date">{{ formatDate(puzzle.timestamp) }}</div>
               <div class="library-actions">
-                <button @click="renamePuzzle(index)" class="btn-action btn-rename">重命名</button>
                 <button @click="deletePuzzleFromLibrary(index)" class="btn-action btn-delete">删除</button>
               </div>
             </div>
@@ -360,7 +358,6 @@ const {
   addPuzzleToLibrary,
   loadPuzzleFromLibrary,
   deletePuzzleFromLibrary,
-  renamePuzzle,
   getDifficultyText
 } = usePuzzleLibrary(board, hasPuzzle);
 
@@ -1434,21 +1431,35 @@ onMounted(() => {
   }
 
   .library-item {
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     text-align: center;
+    padding: 10px;
   }
 
   .library-preview {
-    margin: 10px auto;
+    margin: 0;
+    flex: 0 0 auto;
   }
 
   .library-info {
-    min-width: 100%;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: auto;
+    flex: 1;
+    padding: 0 10px;
+    text-align: left;
   }
 
   .library-actions {
-    justify-content: center;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+
+  .btn-action {
+    flex: 1;
+    min-width: 80px;
   }
 }
 
