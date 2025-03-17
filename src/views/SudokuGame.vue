@@ -465,7 +465,7 @@ onMounted(() => {
 .main-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
   gap: 20px;
   padding-bottom: 80px; /* 增加底部内边距 */
