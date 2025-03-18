@@ -40,6 +40,7 @@
           @cellInput="validateInput"
           @cellHover="highlightCell"
           @cellLeave="clearHighlight"
+          @cellClick="highlightCell"
         />
 
         <!-- 操作按钮 -->

@@ -22,7 +22,7 @@
       @click="onTabChange('techniques')"
     >
       <div class="tab-icon">💡</div>
-      <div class="tab-label">技巧</div>
+      <div class="tab-label">秘籍</div>
     </div>
   </div>
 </template>

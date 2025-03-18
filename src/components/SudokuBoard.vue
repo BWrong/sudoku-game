@@ -10,6 +10,10 @@
         :class="{
           'highlight-step': currentStepCells && currentStepCells.some(c => c.row === rowIndex && c.col === colIndex),
           'highlight-hint': highlightedCell && highlightedCell.row === rowIndex && highlightedCell.col === colIndex,
+          'highlight-row': highlightedCell && highlightedCell.row === rowIndex && !(rowIndex === highlightedCell.row && colIndex === highlightedCell.col),
+          'highlight-col': highlightedCell && highlightedCell.col === colIndex && !(rowIndex === highlightedCell.row && colIndex === highlightedCell.col),
+          'highlight-box': highlightedCell && Math.floor(rowIndex / 3) === Math.floor(highlightedCell.row / 3) && Math.floor(colIndex / 3) === Math.floor(highlightedCell.col / 3) && !(rowIndex === highlightedCell.row && colIndex === highlightedCell.col),
+          'highlight-same': highlightedCell && cell.value && cell.value === board[highlightedCell.row][highlightedCell.col].value && !(rowIndex === highlightedCell.row && colIndex === highlightedCell.col),
           'top-border': rowIndex % 3 === 0,
           'bottom-border': rowIndex % 3 === 2,
           'left-border': colIndex % 3 === 0,
@@ -18,6 +22,7 @@
           'user-answer': cell.isUserAnswer,
           'solution': cell.isSolution
         }"
+        @click="onCellClick(rowIndex, colIndex)"
       >
         <input
           v-if="!showSolution && ((gameMode === 'create' && !cell.isUserAnswer) || (gameMode === 'solve' && !cell.isUserInput))"
@@ -25,6 +30,7 @@
           v-model="cell.value"
           @input="onCellInput($event, rowIndex, colIndex)"
           @focus="onCellFocus(rowIndex, colIndex)"
+          @blur="onCellBlur"
           maxlength="1"
           :disabled="showSolution || (gameMode === 'solve' && cell.isUserInput) || (gameMode === 'create' && cell.isUserAnswer)"
         >
@@ -82,7 +88,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['cellInput', 'cellHover', 'cellLeave']);
+const emit = defineEmits(['cellInput', 'cellHover', 'cellLeave', 'cellClick']);
 
 // 监听高亮变化
 watch(() => props.highlightedCell, (newVal) => {
@@ -102,6 +108,15 @@ const onCellInput = (event, row, col) => {
 };
 
 /**
+ * 单元格点击事件 - 确保即使点击span也能触发高亮
+ * @param {number} row - 行索引
+ * @param {number} col - 列索引
+ */
+const onCellClick = (row, col) => {
+  emit('cellHover', row, col); // 触发悬停事件以更新高亮
+};
+
+/**
  * 单元格焦点事件
  * @param {number} row - 行索引
  * @param {number} col - 列索引
@@ -116,6 +131,14 @@ const onCellFocus = (row, col) => {
 
   // 否则正常触发悬停事件
   emit('cellHover', row, col);
+};
+
+/**
+ * 单元格失去焦点事件
+ */
+const onCellBlur = () => {
+  // 清除输入框的黄色背景高亮
+  // 注意：不清除highlightedCell，只是移除输入框的焦点样式
 };
 
 /**
@@ -207,24 +230,24 @@ const getConfettiStyle = (index) => {
 }
 
 .sudoku-cell:hover {
-  background-color: transparent; /* 移除悬停时的背景色 */
+  background-color: rgba(66, 133, 244, 0.05);
   z-index: 1;
 }
 
 .highlight-row {
-  background-color: transparent; /* 移除行高亮 */
+  background-color: rgba(66, 133, 244, 0.1);
 }
 
 .highlight-col {
-  background-color: transparent; /* 移除列高亮 */
+  background-color: rgba(66, 133, 244, 0.1);
 }
 
 .highlight-box {
-  background-color: transparent; /* 移除宫格高亮 */
+  background-color: rgba(66, 133, 244, 0.1);
 }
 
 .highlight-same {
-  background-color: transparent; /* 移除相同数字高亮 */
+  background-color: rgba(66, 133, 244, 0.25);
 }
 
 .top-border {
@@ -370,6 +393,13 @@ const getConfettiStyle = (index) => {
   font-size: 22px;
 }
 
+/* 输入框失去焦点时清除背景颜色 */
+.sudoku-cell input:not(:focus) {
+  background-color: transparent;
+  box-shadow: none;
+  font-size: 20px;
+}
+
 /* 响应式布局优化 */
 @media (min-width: 361px) and (max-width: 374px) {
   .sudoku-cell input,
@@ -393,13 +423,6 @@ const getConfettiStyle = (index) => {
 }
 
 @media (max-width: 480px) {
-  .sudoku-cell input,
-  .sudoku-cell span {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 360px) {
   .sudoku-cell input,
   .sudoku-cell span {
     font-size: 14px;
