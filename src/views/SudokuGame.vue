@@ -414,6 +414,8 @@ const loadPuzzleFromLibraryAndNavigate = (index) => {
 
   // 切换到游戏标签页
   activeTab.value = 'game';
+  // 切换到解题模式
+  gameMode.value = 'solve';
 };
 
 /**

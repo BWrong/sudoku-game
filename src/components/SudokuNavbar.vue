@@ -79,7 +79,6 @@ const onTabChange = (tab) => {
 
 .tab-item.active {
   color: #4285f4;
-  transform: translateY(-2px);
 }
 
 .tab-icon {
@@ -120,7 +119,6 @@ const onTabChange = (tab) => {
 
   .tab-item:hover:not(.active) {
     background-color: #f5f5f5;
-    transform: translateY(-2px);
   }
 
   .tab-item.active {
