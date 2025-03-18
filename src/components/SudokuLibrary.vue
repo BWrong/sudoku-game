@@ -236,7 +236,6 @@ const clearLibrary = () => {
   flex-direction: column;
   padding: 15px;
   justify-content: center;
-  min-width: 150px;
 }
 
 .library-difficulty {

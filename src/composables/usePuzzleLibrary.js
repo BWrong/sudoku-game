@@ -3,7 +3,6 @@
  * @file usePuzzleLibrary.js
  */
 import { ref, onMounted } from 'vue';
-import { useUI } from './useUI';
 
 /**
  * 数独题库管理
@@ -15,8 +14,6 @@ export function usePuzzleLibrary(board, hasPuzzle) {
   // 题库中的数独题目列表
   const puzzleLibrary = ref([]);
 
-  // 导入UI工具
-  const { formatDate } = useUI();
 
   /**
    * 将题库列表存储到localStorage

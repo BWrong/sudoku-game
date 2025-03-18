@@ -284,10 +284,7 @@ const {
   updateStepHighlight
 } = useSteps(solutionSteps, currentStepCells);
 
-// UI相关方法
-const {
-  addTouchSupport
-} = useUI();
+
 
 // 题库相关状态和方法
 const {
@@ -642,8 +639,6 @@ watch(highlightedCell, (newVal) => {
 
 // 初始化
 onMounted(() => {
-  // 添加移动端触摸支持
-  addTouchSupport();
 
   // 加载题库数据，但不自动加载题目
   loadPuzzleFromLibrary();

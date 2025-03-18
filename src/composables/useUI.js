@@ -9,23 +9,6 @@ import { onMounted } from 'vue';
  * @returns {Object} 返回UI相关方法
  */
 export function useUI() {
-  /**
-   * 为数独棋盘添加触摸支持
-   */
-  const addTouchSupport = () => {
-    const onTouchStart = (e) => {
-      // 阻止长按弹出上下文菜单
-      e.preventDefault();
-    };
-
-    // 添加触摸事件监听器
-    document.addEventListener('touchstart', onTouchStart, { passive: false });
-
-    // 返回清理函数
-    return () => {
-      document.removeEventListener('touchstart', onTouchStart);
-    };
-  };
 
   /**
    * 格式化日期显示
@@ -86,7 +69,6 @@ export function useUI() {
   };
 
   return {
-    addTouchSupport,
     formatDate,
     getConfettiStyle
   };

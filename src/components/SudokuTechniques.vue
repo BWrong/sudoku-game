@@ -631,13 +631,9 @@ const techniques = ref([
 /* 数独示例容器样式 */
 .technique-example-container {
   background-color: #fcfcfc;
-  border-radius: 10px;
-  padding: 20px;
   margin: 15px auto;
   text-align: center;
   max-width: 400px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
 }
 
 .technique-example-container p {
