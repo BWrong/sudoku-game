@@ -1,6 +1,10 @@
 name: Upload to COS
 
-on: [push]
+# 只在master分支上触发
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
