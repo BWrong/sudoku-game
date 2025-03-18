@@ -1,12 +1,12 @@
 /**
- * 单元格高亮管理
- * @file useHighlight.js
+ * 单元格高亮逻辑
+ * @module useHighlight
  */
 import { ref } from 'vue';
 
 /**
- * 单元格高亮管理
- * @returns {Object} 高亮相关状态和方法
+ * 高亮逻辑Hook
+ * @returns {Object} 返回高亮状态和方法
  */
 export function useHighlight() {
   // 当前高亮的单元格
@@ -25,6 +25,7 @@ export function useHighlight() {
    * 清除高亮
    */
   const clearHighlight = () => {
+    console.log('清除高亮');
     highlightedCell.value = null;
   };
 
