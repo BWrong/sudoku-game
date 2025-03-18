@@ -5,9 +5,9 @@
       <h1>数独游戏</h1>
       <p class="subtitle">挑战你的逻辑思维能力</p>
     </div>
-    <router-view />
+    <SudokuGame />
     <footer class="app-footer">
-      <p>© 2023 数独游戏 - 享受解谜的乐趣</p>
+      <p>© 2025 数独游戏 - 享受解谜的乐趣</p>
     </footer>
   </div>
 </template>
@@ -17,8 +17,13 @@
  * 应用主组件
  * @component App
  */
+import SudokuGame from './views/SudokuGame.vue';
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    SudokuGame
+  }
 }
 </script>
 

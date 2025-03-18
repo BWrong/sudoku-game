@@ -2,7 +2,7 @@
  * 游戏面板管理
  * @file useGameBoard.js
  */
-import { ref, reactive } from 'vue';
+import { ref, computed } from 'vue';
 
 /**
  * 游戏面板管理
@@ -16,7 +16,7 @@ export function useGameBoard() {
   const createEmptyBoard = () => {
     return Array(9).fill().map(() =>
       Array(9).fill().map(() => ({
-        value: '',
+        value: null,
         isUserInput: false,
         isSolution: false,
         isUserAnswer: false
@@ -25,7 +25,7 @@ export function useGameBoard() {
   };
 
   // 数独游戏面板
-  const board = reactive(createEmptyBoard());
+  const board = ref(createEmptyBoard());
 
   // 是否已解决
   const isSolved = ref(false);
@@ -36,19 +36,31 @@ export function useGameBoard() {
   /**
    * 初始化数独面板
    */
-  const initializeBoard = () => {
-    // 更新每个单元格的值
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        board[i][j].value = '';
-        board[i][j].isUserInput = false;
-        board[i][j].isSolution = false;
-        board[i][j].isUserAnswer = false;
+  const initializeBoard = (initialBoard = null) => {
+    if (initialBoard) {
+      // 使用给定的初始棋盘数据
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          board.value[i][j] = { ...initialBoard[i][j] };
+        }
+      }
+    } else {
+      // 重置棋盘
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          board.value[i][j] = {
+            value: null,
+            isUserInput: false,
+            isUserAnswer: false,
+            isSolution: false
+          };
+        }
       }
     }
 
-    showSolution.value = false;
+    // 重置解题状态
     isSolved.value = false;
+    showSolution.value = false;
   };
 
   /**
@@ -59,25 +71,31 @@ export function useGameBoard() {
    * @param {string} gameMode - 游戏模式
    */
   const validateInput = (event, row, col, gameMode) => {
+    const cell = board.value[row][col];
     const value = event.target.value;
 
-    // 只允许输入1-9的数字
-    if (value && !/^[1-9]$/.test(value)) {
-      board[row][col].value = '';
+    // 如果输入为空，清除当前单元格
+    if (!value) {
+      cell.value = null;
       return;
     }
 
-    if (value) {
-      if (gameMode === 'create') {
-        board[row][col].isUserInput = true;
-        board[row][col].isUserAnswer = false;
-      } else if (gameMode === 'solve') {
-        board[row][col].isUserInput = false;
-        board[row][col].isUserAnswer = true;
-      }
-    } else {
-      board[row][col].isUserInput = false;
-      board[row][col].isUserAnswer = false;
+    // 只允许输入1-9
+    const num = parseInt(value);
+    if (isNaN(num) || num < 1 || num > 9) {
+      event.target.value = cell.value || '';
+      return;
+    }
+
+    cell.value = num;
+
+    // 设置单元格状态
+    if (gameMode === 'create') {
+      cell.isUserInput = true;
+      cell.isUserAnswer = false;
+    } else if (gameMode === 'solve') {
+      cell.isUserAnswer = true;
+      cell.isUserInput = false;
     }
   };
 
@@ -89,19 +107,21 @@ export function useGameBoard() {
   };
 
   /**
-   * 清空答案（保留题目）
+   * 清除解答
    */
   const clearSolution = () => {
-    // 保留用户输入的题目，清除解答
+    // 将isSolution标记为true的单元格值清空，同时清除用户输入的答案
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        if (!board[i][j].isUserInput) {
-          board[i][j].value = '';
-          board[i][j].isSolution = false;
-          board[i][j].isUserAnswer = false;
+        if (board.value[i][j].isSolution || board.value[i][j].isUserAnswer) {
+          board.value[i][j].value = null;
+          board.value[i][j].isSolution = false;
+          board.value[i][j].isUserAnswer = false;
         }
       }
     }
+
+    // 重置状态
     showSolution.value = false;
     isSolved.value = false;
   };

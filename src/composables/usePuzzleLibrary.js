@@ -2,16 +2,16 @@
  * 数独题库管理
  * @file usePuzzleLibrary.js
  */
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUI } from './useUI';
 
 /**
  * 数独题库管理
- * @param {Object} boardRef - 数独面板的reactive对象
- * @param {Object} hasPuzzleRef - 是否有题目的ref
+ * @param {Ref<Array>} board - 数独面板的ref
+ * @param {Ref<boolean>} hasPuzzle - 是否有题目的ref
  * @returns {Object} 题库相关状态和方法
  */
-export function usePuzzleLibrary(boardRef, hasPuzzleRef) {
+export function usePuzzleLibrary(board, hasPuzzle) {
   // 题库中的数独题目列表
   const puzzleLibrary = ref([]);
 
@@ -79,139 +79,94 @@ export function usePuzzleLibrary(boardRef, hasPuzzleRef) {
   };
 
   /**
-   * 将当前题目添加到题库
-   * @param {string} name - 题目名称，可选
-   * @returns {boolean} 是否成功添加
-   */
-  const addPuzzleToLibrary = (name = '') => {
-    // 检查是否有题目输入
-    let hasInput = false;
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (boardRef[i][j].isUserInput) {
-          hasInput = true;
-          break;
-        }
-      }
-      if (hasInput) break;
-    }
-
-    if (!hasInput) {
-      alert('请先输入题目再保存！');
-      return false;
-    }
-
-    // 检查是否是重复题目，如果重复则静默不添加
-    if (isDuplicatePuzzle(boardRef)) {
-      return false;
-    }
-
-    // 创建题目的副本（只保存用户输入的部分）
-    const puzzleCopy = {
-      board: boardRef.map(row =>
-        row.map(cell => ({
-          value: cell.isUserInput ? cell.value : '',
-          isUserInput: cell.isUserInput,
-          isSolution: false,
-          isUserAnswer: false
-        }))
-      ),
-      timestamp: Date.now(),
-      name: name || `题目 ${puzzleLibrary.value.length + 1}`,
-      difficulty: calculateDifficulty(boardRef)
-    };
-
-    // 添加到题库列表
-    puzzleLibrary.value.unshift(puzzleCopy);
-
-    // 限制保存数量，最多保存30个
-    if (puzzleLibrary.value.length > 30) {
-      puzzleLibrary.value.pop();
-    }
-
-    // 保存到localStorage
-    savePuzzlesToStorage();
-
-    return true;
-  };
-
-  /**
-   * 计算题目难度（基于已填入数字的数量）
-   * @param {Array<Array<Object>>} board - 数独面板
-   * @returns {number} 难度等级 1-5
-   */
-  const calculateDifficulty = (board) => {
-    let filledCount = 0;
-
-    // 计算已填入的数字数量
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        if (board[i][j].isUserInput && board[i][j].value) {
-          filledCount++;
-        }
-      }
-    }
-
-    // 根据已填入数字数量确定难度
-    if (filledCount >= 40) return 1; // 简单
-    if (filledCount >= 35) return 2; // 中等
-    if (filledCount >= 30) return 3; // 困难
-    if (filledCount >= 25) return 4; // 专家
-    return 5; // 大师
-  };
-
-  /**
    * 获取难度文本
-   * @param {number} level - 难度级别
+   * @param {number} difficulty - 难度等级
    * @returns {string} 难度文本
    */
-  const getDifficultyText = (level) => {
-    const difficultyTexts = {
-      1: '简单',
-      2: '中等',
-      3: '困难',
-      4: '专家',
-      5: '大师'
+  const getDifficultyText = (difficulty) => {
+    switch(difficulty) {
+      case 1: return '简单';
+      case 2: return '中等';
+      case 3: return '困难';
+      case 4: return '专家';
+      default: return '未知';
+    }
+  };
+
+  /**
+   * 将当前题目添加到题库
+   * @param {number} difficulty - 题目难度
+   */
+  const addPuzzleToLibrary = (difficulty = 2) => {
+    // 深拷贝当前棋盘
+    const puzzleCopy = JSON.parse(JSON.stringify(board.value));
+
+    // 添加题目到题库
+    const puzzle = {
+      board: puzzleCopy,
+      difficulty: difficulty,
+      timestamp: Date.now()
     };
-    return difficultyTexts[level] || '未知';
+
+    puzzleLibrary.value.push(puzzle);
+
+    // 保存到本地存储
+    localStorage.setItem('sudoku-puzzles', JSON.stringify(puzzleLibrary.value));
   };
 
   /**
    * 从题库加载指定的题目
    * @param {number} index - 题目索引，不传则只加载题库
    */
-  const loadPuzzleFromLibrary = (index) => {
-    // 如果没有传入索引，只加载题库
-    if (index === undefined) {
-      loadPuzzlesFromStorage();
+  const loadPuzzleFromLibrary = (index = -1) => {
+    // 如果是加载默认题库
+    if (index === -1) {
+      // 从本地存储加载题库
+      const storedPuzzles = localStorage.getItem('sudoku-puzzles');
+      if (storedPuzzles) {
+        puzzleLibrary.value = JSON.parse(storedPuzzles);
+      }
+
+      // 仅加载题库数据，不自动加载最新题目
       return;
     }
 
-    const puzzle = puzzleLibrary.value[index];
-    if (puzzle) {
-      // 深拷贝题目数据到当前面板
-      for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-          boardRef[i][j].value = puzzle.board[i][j].value;
-          boardRef[i][j].isUserInput = puzzle.board[i][j].isUserInput;
-          boardRef[i][j].isSolution = false;
-          boardRef[i][j].isUserAnswer = false;
-        }
-      }
-
-      // 设置为有题目状态
-      hasPuzzleRef.value = true;
+    // 验证索引
+    if (index < 0 || index >= puzzleLibrary.value.length) {
+      return;
     }
+
+    // 加载选定的题目
+    const puzzle = puzzleLibrary.value[index];
+
+    // 更新棋盘
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        board.value[i][j] = { ...puzzle.board[i][j] };
+      }
+    }
+
+    // 设置为有题目状态
+    hasPuzzle.value = true;
   };
 
   /**
    * 从题库删除指定的题目
    * @param {number} index - 题目索引
+   * @param {Function} showCustomAlert - 显示自定义弹窗的函数
    */
-  const deletePuzzleFromLibrary = (index) => {
-    if (confirm('确定要删除这个题目吗？')) {
-      puzzleLibrary.value.splice(index, 1);
-      savePuzzlesToStorage();
+  const deletePuzzleFromLibrary = (index, showCustomAlert) => {
+    if (showCustomAlert) {
+      showCustomAlert('确定要删除这个题目吗？', 'error', () => {
+        puzzleLibrary.value.splice(index, 1);
+        savePuzzlesToStorage();
+      });
+    } else {
+      // 兼容处理，如果没有传入showCustomAlert函数，则使用原来的confirm
+      if (confirm('确定要删除这个题目吗？')) {
+        puzzleLibrary.value.splice(index, 1);
+        savePuzzlesToStorage();
+      }
     }
   };
 
@@ -230,7 +185,9 @@ export function usePuzzleLibrary(boardRef, hasPuzzleRef) {
   };
 
   // 初始化时加载题库
-  loadPuzzlesFromStorage();
+  onMounted(() => {
+    loadPuzzleFromLibrary();
+  });
 
   return {
     puzzleLibrary,

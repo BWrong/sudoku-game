@@ -1,63 +1,93 @@
 /**
- * UI相关功能
- * @file useUI.js
+ * UI相关逻辑
+ * @module useUI
  */
+import { onMounted } from 'vue';
 
 /**
- * UI相关功能
- * @returns {Object} UI相关方法
+ * UI逻辑Hook
+ * @returns {Object} 返回UI相关方法
  */
 export function useUI() {
   /**
-   * 添加移动端触摸事件支持
+   * 为数独棋盘添加触摸支持
    */
   const addTouchSupport = () => {
-    // 检测是否为移动设备
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const onTouchStart = (e) => {
+      // 阻止长按弹出上下文菜单
+      e.preventDefault();
+    };
 
-    if (isMobile) {
-      // 调整视口
-      const viewport = document.querySelector('meta[name=viewport]');
-      if (viewport) {
-        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-      }
-    }
-  };
+    // 添加触摸事件监听器
+    document.addEventListener('touchstart', onTouchStart, { passive: false });
 
-  /**
-   * 获取随机的五彩纸屑样式
-   * @param {number} index - 索引
-   * @returns {Object} 样式对象
-   */
-  const getConfettiStyle = (index) => {
-    const colors = ['#4285f4', '#34a853', '#fbbc05', '#ea4335', '#673ab7'];
-    const size = Math.floor(Math.random() * 10) + 5;
-    const left = Math.floor(Math.random() * 100);
-    const animationDuration = Math.floor(Math.random() * 3) + 2;
-    const animationDelay = Math.random() * 2;
-
-    return {
-      '--size': `${size}px`,
-      '--left': `${left}%`,
-      '--color': colors[index % colors.length],
-      '--animation-duration': `${animationDuration}s`,
-      '--animation-delay': `${animationDelay}s`
+    // 返回清理函数
+    return () => {
+      document.removeEventListener('touchstart', onTouchStart);
     };
   };
 
   /**
-   * 格式化日期
+   * 格式化日期显示
    * @param {number} timestamp - 时间戳
    * @returns {string} 格式化后的日期字符串
    */
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+    const now = new Date();
+    const diff = now - date;
+
+    // 今天
+    if (
+      date.getDate() === now.getDate() &&
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear()
+    ) {
+      return `今天 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    }
+
+    // 昨天
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (
+      date.getDate() === yesterday.getDate() &&
+      date.getMonth() === yesterday.getMonth() &&
+      date.getFullYear() === yesterday.getFullYear()
+    ) {
+      return `昨天 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    }
+
+    // 七天内
+    if (diff < 7 * 24 * 60 * 60 * 1000) {
+      const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      return `${days[date.getDay()]} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+    }
+
+    // 更早
+    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  };
+
+  /**
+   * 生成庆祝动画的样式
+   * @param {number} index - 粒子索引
+   * @returns {Object} CSS样式对象
+   */
+  const getConfettiStyle = (index) => {
+    const colors = ['#4285f4', '#34a853', '#fbbc05', '#ea4335'];
+    const size = 5 + Math.random() * 10 + 'px';
+
+    return {
+      '--size': size,
+      '--left': Math.random() * 100 + '%',
+      '--color': colors[Math.floor(Math.random() * colors.length)],
+      '--animation-duration': (3 + Math.random() * 2) + 's',
+      '--animation-delay': (Math.random() * 0.5) + 's',
+    };
   };
 
   return {
     addTouchSupport,
-    getConfettiStyle,
-    formatDate
+    formatDate,
+    getConfettiStyle
   };
 }
