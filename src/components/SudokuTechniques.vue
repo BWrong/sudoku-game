@@ -89,31 +89,31 @@
             <table class="sudoku-example">
               <tbody>
                 <tr>
-                  <td class="empty">-</td><td>2</td><td>3</td><td class="border-right">3</td><td>5</td><td>7</td><td class="border-right">9</td><td>8</td><td class="highlight-cell">6</td>
+                  <td class="empty">-</td><td>2</td><td class="border-right">3</td><td>3</td><td>5</td><td class="border-right">7</td><td>9</td><td>8</td><td class="highlight-cell">6</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">6</td><td class="empty">-</td><td>8</td><td class="border-right">7</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td>6</td><td class="empty">-</td><td class="border-right">8</td><td>7</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td>7</td><td>8</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td>2</td><td class="empty">-</td>
+                  <td>7</td><td>8</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td>2</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td>3</td><td class="empty">-</td><td>8</td><td class="border-right empty">-</td><td class="empty">-</td><td>6</td><td class="border-right empty">-</td><td>9</td><td>7</td>
+                  <td>3</td><td class="empty">-</td><td class="border-right">8</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">6</td><td class="empty">-</td><td>9</td><td>7</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td>2</td><td>7</td><td>6</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">8</td><td class="empty">-</td><td>3</td>
+                  <td>2</td><td>7</td><td class="border-right">6</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td>8</td><td class="empty">-</td><td>3</td>
                 </tr>
                 <tr>
-                  <td>8</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td>7</td><td>2</td>
+                  <td>8</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">-</td><td class="empty">-</td><td>7</td><td>2</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td>7</td><td class="border-right">8</td><td class="empty">-</td><td>9</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="border-right">7</td><td>8</td><td class="empty">-</td><td class="border-right">9</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td>9</td><td>5</td><td>2</td><td class="border-right">7</td><td>6</td><td class="empty">-</td><td class="border-right">3</td><td>1</td><td class="empty">-</td>
+                  <td>9</td><td>5</td><td class="border-right">2</td><td>7</td><td>6</td><td class="empty border-right">-</td><td class="">3</td><td>1</td><td class="empty">-</td>
                 </tr>
               </tbody>
             </table>
@@ -135,35 +135,35 @@
         </div>
         <div class="technique-example">
           <div class="technique-example-container">
-            <p>例如：在下图中，数字4在左下角的宫格中只能出现在底行（标记为黄色的单元格）。这意味着底行的其他宫格中不能出现4，可以排除标记为红色的位置。</p>
+            <p>例如：在下图中，数字4在左下角的宫格中只能出现在底行（标记为黄色的单元格）。这意味着底行的其他宫格中不能有4，可以排除标记为红色的位置。</p>
             <table class="sudoku-example">
               <tbody>
                 <tr>
-                  <td>5</td><td>3</td><td class="empty">-</td><td class="border-right empty">-</td><td>7</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td>5</td><td>3</td><td class="empty border-right">-</td><td class="empty">-</td><td>7</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td>6</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">1</td><td>9</td><td>5</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td>6</td><td class="empty">-</td><td class="empty border-right">-</td><td>1</td><td>9</td><td class="border-right">5</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td class="empty">-</td><td>9</td><td>8</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td>6</td><td class="empty">-</td>
+                  <td class="empty">-</td><td>9</td><td class="border-right">8</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td>6</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td>8</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td>6</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td>3</td>
+                  <td>8</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td>6</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td>3</td>
                 </tr>
                 <tr>
-                  <td>4</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">8</td><td class="empty">-</td><td>3</td><td class="border-right empty">-</td><td class="empty">-</td><td>1</td>
+                  <td>4</td><td class="empty">-</td><td class="empty border-right">-</td><td>8</td><td class="empty">-</td><td class="border-right">3</td><td class="empty">-</td><td class="empty">-</td><td>1</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td>7</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td>2</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td>6</td>
+                  <td>7</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td>2</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td>6</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td>6</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">2</td><td>8</td><td class="empty">-</td>
+                  <td class="empty">-</td><td>6</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td>2</td><td>8</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right">4</td><td>1</td><td>9</td><td class="border-right empty">-</td><td class="empty">-</td><td>5</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td>4</td><td>1</td><td class="border-right">9</td><td class="empty">-</td><td class="empty">-</td><td>5</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="highlight-possible">-</td><td class="border-right empty">-</td><td>8</td><td class="exclude-cell">-</td><td class="border-right exclude-cell">-</td><td>7</td><td>9</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="highlight-possible border-right">-</td><td class="empty">-</td><td>8</td><td class="exclude-cell border-right">-</td><td class="exclude-cell">-</td><td>7</td><td>9</td>
                 </tr>
               </tbody>
             </table>
@@ -188,31 +188,31 @@
             <table class="sudoku-example">
               <tbody>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty  border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="naked-pair">[2,5]</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="naked-pair">[2,5]</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="naked-pair">[2,5]</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="naked-pair">[2,5]</td><td class="empty">-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty     border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty   border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
                 <tr>
-                  <td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="border-right empty">-</td><td class="empty">-</td><td class="empty">-</td>
+                  <td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty border-right">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td>
                 </tr>
               </tbody>
             </table>
@@ -239,31 +239,31 @@
             <table class="sudoku-example">
               <tbody>
                 <tr>
-                  <td>5</td><td>3</td><td>4</td><td class="border-right">6</td><td>7</td><td>8</td><td class="border-right">9</td><td>1</td><td>2</td>
+                  <td>5</td><td>3</td><td class="border-right">4</td><td>6</td><td>7</td><td class="border-right">8</td><td>9</td><td>1</td><td>2</td>
                 </tr>
                 <tr>
-                  <td>6</td><td>7</td><td>2</td><td class="border-right">1</td><td>9</td><td>5</td><td class="border-right">3</td><td>4</td><td>8</td>
+                  <td>6</td><td>7</td><td class="border-right">2</td><td>1</td><td>9</td><td class="border-right">5</td><td>3</td><td>4</td><td>8</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td class="highlight-cell">-</td><td>9</td><td>8</td><td class="border-right">3</td><td>4</td><td>2</td><td class="border-right">5</td><td>6</td><td class="highlight-cell">-</td>
+                  <td class="highlight-cell">-</td><td>9</td><td class="border-right">8</td><td>3</td><td>4</td><td class="border-right">2</td><td>5</td><td>6</td><td class="highlight-cell">-</td>
                 </tr>
                 <tr>
-                  <td class="exclude-cell">-</td><td>5</td><td>9</td><td class="border-right">7</td><td>6</td><td>1</td><td class="border-right">4</td><td>2</td><td>3</td>
+                  <td class="exclude-cell">-</td><td>5</td><td class="border-right">9</td><td>7</td><td>6</td><td class="border-right">1</td><td>4</td><td>2</td><td>3</td>
                 </tr>
                 <tr>
-                  <td class="exclude-cell">-</td><td>4</td><td>6</td><td class="border-right">8</td><td>5</td><td>3</td><td class="border-right">7</td><td>9</td><td>1</td>
+                  <td class="exclude-cell">-</td><td>4</td><td class="border-right">6</td><td>8</td><td>5</td><td class="border-right">3</td><td>7</td><td>9</td><td>1</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td class="exclude-cell">-</td><td>2</td><td>1</td><td class="border-right">9</td><td>8</td><td>4</td><td class="border-right">6</td><td>5</td><td class="exclude-cell">-</td>
+                  <td class="exclude-cell">-</td><td>2</td><td class="border-right">1</td><td>9</td><td>8</td><td class="border-right">4</td><td>6</td><td>5</td><td class="exclude-cell">-</td>
                 </tr>
                 <tr>
-                  <td class="highlight-cell">-</td><td>1</td><td>5</td><td class="border-right">2</td><td>3</td><td>6</td><td class="border-right">8</td><td>7</td><td class="highlight-cell">-</td>
+                  <td class="highlight-cell">-</td><td>1</td><td class="border-right">5</td><td>2</td><td>3</td><td class="border-right">6</td><td>8</td><td>7</td><td class="highlight-cell">-</td>
                 </tr>
                 <tr>
-                  <td>9</td><td>6</td><td>3</td><td class="border-right">5</td><td>1</td><td>7</td><td class="border-right">2</td><td>8</td><td>4</td>
+                  <td>9</td><td>6</td><td class="border-right">3</td><td>5</td><td>1</td><td class="border-right">7</td><td>2</td><td>8</td><td>4</td>
                 </tr>
                 <tr>
-                  <td>2</td><td>8</td><td>7</td><td class="border-right">4</td><td>2</td><td>9</td><td class="border-right">1</td><td>3</td><td>6</td>
+                  <td>2</td><td>8</td><td class="border-right">7</td><td>4</td><td>2</td><td class="border-right">9</td><td>1</td><td>3</td><td>6</td>
                 </tr>
               </tbody>
             </table>
@@ -341,31 +341,31 @@
             <table class="sudoku-example">
               <tbody>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td class="naked-pair">[7,9]</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td class="naked-pair">[7,9]</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td class="naked-pair">[2,9]</td><td>-</td><td class="border-right">-</td><td class="naked-pair">[2,7]</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td class="naked-pair">[2,9]</td><td class="border-right">-</td><td>-</td><td class="naked-pair">[2,7]</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td class="exclude-cell">-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td class="exclude-cell">-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
               </tbody>
             </table>
@@ -391,31 +391,31 @@
             <table class="sudoku-example">
               <tbody>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>4</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">4</td><td >-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td >-</td><td>-</td><td>-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>4</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>4</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td class="highlight-possible">4</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="highlight-possible border-right">4</td><td >-</td><td>-</td><td>-</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td>4</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>4</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td class="exclude-cell">-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="exclude-cell border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td >-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                  <td>-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td>
+                  <td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td class="border-right">-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
               </tbody>
             </table>
