@@ -1,7 +1,9 @@
 # 数独游戏 (Sudoku Game)
 
 一个基于Vue 3的现代数独游戏应用，具有丰富的功能和美观的用户界面。
+![](https://pictures-1303450388.cos.ap-chengdu.myqcloud.com/20260422162302250.png)
 
+![](https://pictures-1303450388.cos.ap-chengdu.myqcloud.com/20260422162327076.png)
 ## 🌟 功能特点
 
 - 🎮 多种游戏模式：玩家模式和创作模式
